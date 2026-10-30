@@ -1,0 +1,13 @@
+name: bovedadocs-frontend
+
+services:
+  frontend:
+    build: .
+    container_name: bovedadocs-frontend
+    ports:
+      - "3000:80"
+    environment:
+      BACKEND_URL: http://host.docker.internal:8080
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
