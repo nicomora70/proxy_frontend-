@@ -133,7 +133,7 @@ function renderDocuments() {
 
   grid.innerHTML = state.documents.map((doc, index) => {
     const image = documentImage(doc.id, index);
-    const locked = doc.canRead === false;
+    const locked = state.layers.access && doc.canRead === false;
     const meta = [
       escapeHtml(doc.ownerName),
       formatSize(doc.sizeKb) + (locked ? " · locked" : "")
@@ -304,11 +304,15 @@ function fillOverlaySummary(summary) {
 }
 
 function renderFlags(summary, data) {
-  const flags = [
+  const flags = [];
+  if (!state.layers.access) {
+    flags.push(flag("ACCESS BYPASSED", true));
+  }
+  flags.push(
     flag("READ", summary.canRead !== false, true),
     flag("WRITE", summary.canWrite === true),
     flag("DELETE", summary.canDelete === true)
-  ];
+  );
   if (data.cacheHit) {
     flags.push(flag("CACHE HIT", true));
   }
