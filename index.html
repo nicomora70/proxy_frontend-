@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BóvedaDocs — laboratorio del patrón Proxy: acceso, caché, carga diferida y auditoría sobre un gestor documental.">
+  <title>BóvedaDocs — Proxy Pattern Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="page-grid" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <aside class="rail" aria-label="BóvedaDocs">
+    <a class="rail-logo" href="#vault" aria-label="BóvedaDocs inicio">b<span>.</span></a>
+    <div class="rail-index"><span id="rail-section">01</span> / 07</div>
+    <div class="rail-line" aria-hidden="true"></div>
+    <nav class="rail-nav" aria-label="Accesos rápidos">
+      <a href="#documents" aria-label="Documentos" title="Documentos">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5"/></svg>
+      </a>
+      <a href="#control" aria-label="Sala de control" title="Sala de control">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="8" cy="7" r="2"/><circle cx="16" cy="12" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+      </a>
+      <a href="#audit" aria-label="Auditoría" title="Auditoría">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="8"/></svg>
+      </a>
+      <a href="https://github.com/nicomora70/proxy_backend" target="_blank" rel="noreferrer" aria-label="Repositorio backend" title="Repositorio backend">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M9 19c-4 1.5-4-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.6 11.6 0 0 0-6.2 0C6.6 2.8 5.6 3.1 5.6 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4.2 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+      </a>
+    </nav>
+    <div class="rail-vertical">Document intelligence</div>
+    <div class="rail-bottom">UCC<br>2026</div>
+  </aside>
+
+  <header class="topbar">
+    <a class="topbar-brand" href="#vault">bóveda<span>.</span></a>
+    <nav class="topnav" aria-label="Principal">
+      <a href="#vault" class="active">Vault</a>
+      <a href="#documents">Documents</a>
+      <a href="#access">Access</a>
+      <a href="#control">Control</a>
+      <a href="#audit">Audit</a>
+    </nav>
+    <div class="topbar-status">
+      <span class="dot"></span>
+      <span id="system-status">System online</span>
+      <span class="clock" id="clock">--:--</span>
+    </div>
+  </header>
+
+  <main>
+    <section id="vault" class="hero" data-section="01">
+      <img class="hero-bg" src="assets/hero.jpg" alt="">
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="hero-lines" aria-hidden="true"></div>
+      <div class="hero-content">
+        <p class="eyebrow">01 / 07 — Document vault</p>
+        <h1>Bóveda<br>Docs</h1>
+        <div class="hero-rule" aria-hidden="true"></div>
+        <p class="hero-copy">Document intelligence, controlled by proxies. Four layers decide what you can see, how fast you see it, and who gets denied.</p>
+        <a class="pill" href="#documents">Enter the vault <span class="pill-arrow">→</span></a>
+      </div>
+      <div class="hero-meta">
+        <span>Proxy pattern lab</span>
+        <span>UCC · Patrones de Software · 2026</span>
+      </div>
+      <a class="hero-scroll" href="#about" aria-label="Bajar a la sección about"><span></span>Scroll</a>
+    </section>
+
+    <section id="about" class="section about" data-section="02">
+      <div class="watermark" aria-hidden="true">about</div>
+      <header class="section-head">
+        <span class="section-num">02</span>
+        <h2>About Bóveda</h2>
+        <span class="section-rule" aria-hidden="true"></span>
+      </header>
+      <div class="about-grid">
+        <div class="about-intro reveal">
+          <p class="display-line">We turn access rules into <em>works of control.</em></p>
+          <p class="body-copy">BóvedaDocs is a corporate document vault where every request crosses a chain of proxies before touching the real service. The client only knows one interface; the chain decides what happens behind it.</p>
+          <p class="body-copy">Switch users, disable layers, and run the same request again. Nothing about the client changes. That is the point.</p>
+        </div>
+        <div class="about-spec reveal">
+          <p class="overline">Our specialization</p>
+          <ul class="spec-list">
+            <li>
+              <span class="spec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span>
+              <div><strong>Protection</strong><small>Role, area and classification checked on every call.</small></div>
+            </li>
+            <li>
+              <span class="spec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span>
+              <div><strong>Cache</strong><small>Repeated reads served from memory until content changes.</small></div>
+            </li>
+            <li>
+              <span class="spec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 16l9 5 9-5"/></svg></span>
+              <div><strong>Lazy load</strong><small>Heavy content loaded only the first time it is opened.</small></div>
+            </li>
+            <li>
+              <span class="spec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg></span>
+              <div><strong>Audit</strong><small>Every call recorded, including the ones that never pass.</small></div>
+            </li>
+          </ul>
+        </div>
+        <figure class="about-figure reveal">
+          <img src="assets/about.jpg" alt="Estantería de archivo en penumbra" loading="lazy">
+          <figcaption>FIG. 01 — THE VAULT</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="documents" class="section documents" data-section="03">
+      <div class="watermark" aria-hidden="true">documents</div>
+      <header class="section-head">
+        <span class="section-num">03</span>
+        <h2>Our documents</h2>
+        <span class="section-rule" aria-hidden="true"></span>
+      </header>
+      <div class="docs-toolbar">
+        <p id="docs-context">Signed in as <strong>Laura Gómez</strong> · — records visible</p>
+        <div class="legend" aria-hidden="true">
+          <span><i class="legend-dot public"></i>Public</span>
+          <span><i class="legend-dot internal"></i>Internal</span>
+          <span><i class="legend-dot confidential"></i>Confidential</span>
+        </div>
+      </div>
+      <div class="doc-grid" id="doc-grid" aria-live="polite"></div>
+      <p class="empty" id="docs-empty" hidden>No documents are visible through this chain.</p>
+    </section>
+
+    <section class="section layers" data-section="04">
+      <div class="layers-inner">
+        <div class="layers-number reveal" aria-hidden="true">04</div>
+        <div class="layers-copy reveal">
+          <p class="overline">Proxy layers</p>
+          <p class="display-line">Four controls.<br>One interface.</p>
+          <p class="body-copy">Logging, access, cache and lazy loading wrap the same remote service. The client cannot tell how many layers stand between it and the vault.</p>
+        </div>
+      </div>
+      <div class="metrics" id="metrics">
+        <div><span class="metric-value" id="m-docs">08</span><span class="metric-label">Documents</span></div>
+        <div><span class="metric-value" id="m-hits">00</span><span class="metric-label">Cache hits</span></div>
+        <div><span class="metric-value" id="m-latency">0<small>ms</small></span><span class="metric-label">Last latency</span></div>
+        <div><span class="metric-value" id="m-denied">00</span><span class="metric-label">Denied</span></div>
+      </div>
+    </section>
+
+    <section id="access" class="section access" data-section="05">
+      <div class="watermark" aria-hidden="true">access</div>
+      <header class="section-head">
+        <span class="section-num">05</span>
+        <h2>Who is asking?</h2>
+        <span class="section-rule" aria-hidden="true"></span>
+      </header>
+      <div class="user-grid" id="user-grid" aria-live="polite"></div>
+      <p class="access-note">The access proxy reads role, area and classification on every request.</p>
+    </section>
+
+    <section id="control" class="section control" data-section="06">
+      <div class="watermark" aria-hidden="true">control</div>
+      <header class="section-head">
+        <span class="section-num">06</span>
+        <h2>Control room</h2>
+        <span class="section-rule" aria-hidden="true"></span>
+      </header>
+      <div class="control-grid">
+        <div class="chain-config reveal">
+          <p class="overline">Chain configuration</p>
+          <p class="body-copy">Turn layers on or off. The server rebuilds the request chain on every call, so the difference is visible immediately.</p>
+          <div class="toggles" id="toggles">
+            <label class="toggle-row" data-layer="log">
+              <input type="checkbox" checked>
+              <span class="toggle" aria-hidden="true"><span></span></span>
+              <span class="toggle-copy"><strong>Logging</strong><small>Audit every call, including denials.</small></span>
+              <span class="toggle-index">01</span>
+            </label>
+            <label class="toggle-row" data-layer="access">
+              <input type="checkbox" checked>
+              <span class="toggle" aria-hidden="true"><span></span></span>
+              <span class="toggle-copy"><strong>Access control</strong><small>Enforce role, area and classification.</small></span>
+              <span class="toggle-index">02</span>
+            </label>
+            <label class="toggle-row" data-layer="cache">
+              <input type="checkbox" checked>
+              <span class="toggle" aria-hidden="true"><span></span></span>
+              <span class="toggle-copy"><strong>Cache</strong><small>Serve repeated reads from memory.</small></span>
+              <span class="toggle-index">03</span>
+            </label>
+            <label class="toggle-row" data-layer="lazy">
+              <input type="checkbox" checked>
+              <span class="toggle" aria-hidden="true"><span></span></span>
+              <span class="toggle-copy"><strong>Lazy loading</strong><small>Load heavy content only when opened.</small></span>
+              <span class="toggle-index">04</span>
+            </label>
+          </div>
+          <button class="ghost-btn" id="reset-btn" type="button">Reset vault &amp; cache</button>
+        </div>
+        <div class="pipeline-panel reveal">
+          <div class="pipeline-head">
+            <p class="overline">Live request chain</p>
+            <span class="pipeline-status" id="pipeline-status">IDLE</span>
+          </div>
+          <div class="pipeline" id="pipeline" aria-hidden="true">
+            <div class="node" data-node="LOG"><span class="node-index">01</span><span class="node-label">Log</span></div>
+            <div class="connector"></div>
+            <div class="node" data-node="ACCESS"><span class="node-index">02</span><span class="node-label">Access</span></div>
+            <div class="connector"></div>
+            <div class="node" data-node="CACHE"><span class="node-index">03</span><span class="node-label">Cache</span></div>
+            <div class="connector"></div>
+            <div class="node" data-node="LAZY"><span class="node-index">04</span><span class="node-label">Lazy</span></div>
+            <div class="connector"></div>
+            <div class="node" data-node="REMOTE"><span class="node-index">05</span><span class="node-label">Remote</span></div>
+          </div>
+          <div class="trace" id="trace">
+            <p class="trace-empty">Run a request to see the proxy trace.</p>
+          </div>
+          <div class="runner">
+            <label class="select-wrap" for="demo-doc">
+              <span>Document</span>
+              <select id="demo-doc"></select>
+            </label>
+            <div class="runner-actions">
+              <button class="pill small" id="run-read" type="button">Read <span class="pill-arrow">→</span></button>
+              <button class="ghost-btn" id="run-write" type="button">Overwrite</button>
+              <button class="ghost-btn danger" id="run-delete" type="button">Delete</button>
+            </div>
+            <p class="runner-note" id="runner-note">Signed in as Laura Gómez · VIEWER</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="audit" class="section audit" data-section="07">
+      <div class="watermark" aria-hidden="true">audit</div>
+      <header class="section-head">
+        <span class="section-num">07</span>
+        <h2>Audit trail</h2>
+        <span class="section-rule" aria-hidden="true"></span>
+      </header>
+      <div class="audit-toolbar">
+        <p class="body-copy" id="audit-summary">No requests yet.</p>
+        <div class="filters" id="audit-filters" role="group" aria-label="Filtrar auditoría">
+          <button type="button" data-filter="ALL" class="active">All</button>
+          <button type="button" data-filter="OK">Allowed</button>
+          <button type="button" data-filter="DENIED">Denied</button>
+        </div>
+      </div>
+      <div class="audit-list" id="audit-list" aria-live="polite"></div>
+      <p class="empty" id="audit-empty" hidden>No entries for this filter.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-brand">bóveda<span>.</span></div>
+    <p>Patrones de Software · Universidad Cooperativa de Colombia · 2026</p>
+    <div class="footer-links">
+      <a href="https://github.com/nicomora70/proxy_backend" target="_blank" rel="noreferrer">Backend repo ↗</a>
+      <a href="https://github.com/nicomora70/proxy_frontend-" target="_blank" rel="noreferrer">Frontend repo ↗</a>
+    </div>
+  </footer>
+
+  <div class="overlay" id="overlay" hidden>
+    <div class="overlay-backdrop" data-close></div>
+    <div class="overlay-panel" role="dialog" aria-modal="true" aria-labelledby="ov-title">
+      <button class="overlay-close" data-close aria-label="Cerrar documento" type="button">×</button>
+      <div class="overlay-meta">
+        <p class="overline" id="ov-class">PUBLIC</p>
+        <h3 id="ov-title">Document</h3>
+        <dl>
+          <div><dt>Area</dt><dd id="ov-area">—</dd></div>
+          <div><dt>Owner</dt><dd id="ov-owner">—</dd></div>
+          <div><dt>Size</dt><dd id="ov-size">—</dd></div>
+          <div><dt>Latency</dt><dd id="ov-latency">—</dd></div>
+        </dl>
+        <div class="overlay-flags" id="ov-flags"></div>
+        <div class="overlay-actions">
+          <button class="ghost-btn" id="ov-edit" type="button">Edit</button>
+          <button class="ghost-btn danger" id="ov-delete" type="button">Delete</button>
+        </div>
+        <p class="overlay-hint">Actions run through the active proxy chain.</p>
+      </div>
+      <div class="overlay-content">
+        <div class="overlay-content-head"><span>CONTENT PREVIEW</span><span id="ov-read-state">—</span></div>
+        <pre id="ov-content">Loading…</pre>
+        <div class="editor" id="ov-editor" hidden>
+          <textarea id="ov-textarea" spellcheck="false" aria-label="Editar contenido"></textarea>
+          <div class="editor-actions">
+            <button class="pill small" id="ov-save" type="button">Save <span class="pill-arrow">→</span></button>
+            <button class="ghost-btn" id="ov-cancel" type="button">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
